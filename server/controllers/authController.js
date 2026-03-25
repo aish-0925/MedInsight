@@ -13,7 +13,7 @@ const generateToken = (user) => {
 // REGISTER
 exports.register = async (req, res) => {
   try {
-    const { name, email, password, role } = req.body;
+    const { name, email, password, role, department } = req.body;
 
     const userExists = await User.findOne({ email });
     if (userExists) {
@@ -24,7 +24,8 @@ exports.register = async (req, res) => {
       name,
       email,
       password,
-      role
+      role,
+      department 
     });
 
     res.status(201).json({
@@ -42,7 +43,8 @@ exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email }).populate("department", "name");
+
     if (!user) {
       return res.status(400).json({ message: "Invalid credentials" });
     }
@@ -59,7 +61,8 @@ exports.login = async (req, res) => {
       user: {
         id: user._id,
         name: user.name,
-        role: user.role
+        role: user.role,
+        department: user.department 
       }
     });
 
