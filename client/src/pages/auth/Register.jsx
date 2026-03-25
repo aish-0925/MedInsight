@@ -10,7 +10,8 @@ const Register = () => {
     name: "",
     email: "",
     password: "",
-    role: "nurse"
+    role: "nurse",
+    department: ""
   });
 
   const [loading, setLoading] = useState(false);
@@ -118,7 +119,16 @@ const Register = () => {
               className="w-full border p-3 rounded-lg"
               required
             />
-
+          <select
+              name="department"
+              onChange={handleChange}
+              className="w-full border p-3 rounded-lg"
+          >
+          <option value="">Select Department</option>
+          <option value="ICU">ICU</option>
+          <option value="Emergency">Emergency</option>
+          <option value="Cardiology">Cardiology</option>
+          </select>
             <select
               name="role"
               onChange={handleChange}
